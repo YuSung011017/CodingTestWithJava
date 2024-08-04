@@ -11,7 +11,7 @@ public class B2109 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-       Point[] points = new Point[n];
+        Point[] points = new Point[n];
         for(int i = 0; i < n; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
             int p = Integer.parseInt(st.nextToken());
@@ -20,6 +20,7 @@ public class B2109 {
         }
 
         Arrays.sort(points, (p1, p2) -> (p1.x == p2.x) ? p2.y - p1.y : p2.x -p1.x);
+        //비용을 기준으로 내림차순 비용이 같으면 날짜를 기준으로 내림차순
 
         int sum = 0;
         boolean[] check = new boolean[10001];
