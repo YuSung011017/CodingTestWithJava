@@ -38,5 +38,6 @@ public class BOJ12865 {
         }
         dp[idx][weight] = Math.max(sol(idx+1,weight),sol(idx+1,weight+products[idx][0])+products[idx][1]);
         return dp[idx][weight];
+
     }
 }
