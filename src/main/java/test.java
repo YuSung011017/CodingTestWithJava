@@ -1,51 +1,34 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 public class test {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-    static int[] dp;
-    static int N;
-    static int[][] table;
+        // 두 문자열 입력 받기
+        String a = sc.nextLine();
+        String b = sc.nextLine();
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
+        // 문자열을 문자 배열로 변환
+        char[] aArr = a.toCharArray();
+        char[] bArr = b.toCharArray();
 
-        table = new int[N + 1][2];
-        dp = new int[N + 1];
+        // DP 테이블 초기화
+        int[][] dp = new int[aArr.length + 1][bArr.length + 1];
 
-        for (int i = 0; i <= N; i++) {
-            dp[i] = -1;
+        // DP 테이블 채우기
+        for (int i = 1; i <= aArr.length; i++) {
+            for (int j = 1; j <= bArr.length; j++) {
+                if (aArr[i - 1] == bArr[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
         }
 
-        for (int i = 1; i <= N; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            table[i][0] = a;
-            table[i][1] = b;
-        }
+        // 최종 결과 출력
+        System.out.println(dp[aArr.length][bArr.length]);
 
-        int ans = sol(1);
-        System.out.println(ans);
-    }
-
-    static int sol(int idx) {
-        if (idx > N + 1) { // 퇴사일 이후라 상담을 못해줌
-            return Integer.MIN_VALUE;
-        }
-
-        if (idx == N + 1) { //퇴사날이라 상담을 못해줌
-            return 0;
-        }
-
-        if (dp[idx] != -1) {
-            return dp[idx];
-        }
-
-        dp[idx] = Math.max(sol(idx + 1), sol(idx + table[idx][0]) + table[idx][1]);
-        return dp[idx];
+        sc.close();
     }
 }
